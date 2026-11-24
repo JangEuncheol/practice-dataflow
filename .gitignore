@@ -1,0 +1,11 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*.tfplan
