@@ -16,6 +16,7 @@ resource "aws_instance" "pipeline_instance" {
   subnet_id = aws_subnet.public_subnet1.id
   key_name = aws_key_pair.key_pair.key_name
   associate_public_ip_address = true
+  user_data = local.ec2_user_data_base
 
   root_block_device {
     volume_size = 20
@@ -23,7 +24,7 @@ resource "aws_instance" "pipeline_instance" {
   }
 
   tags = {
-    Name = "${var.project_name}-pipline-instance"
+    Name = "${var.project_name}-pipeline-instance"
   }
 }
 
@@ -35,6 +36,7 @@ resource "aws_instance" "observability_instance" {
   subnet_id = aws_subnet.public_subnet1.id
   key_name = aws_key_pair.key_pair.key_name
   associate_public_ip_address = true
+  user_data = local.ec2_user_data_base
 
   root_block_device {
     volume_size = 15
