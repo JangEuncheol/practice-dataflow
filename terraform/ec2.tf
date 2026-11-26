@@ -8,7 +8,7 @@ resource "aws_key_pair" "key_pair" {
   }
 }
 
-resource "aws_instance" "instance1" {
+resource "aws_instance" "pipeline_instance" {
   ami = "ami-0a1a0c4fe286aaf02"
   instance_type = var.pipeline_instance_type
   availability_zone = "${var.aws_region}a"
@@ -17,12 +17,17 @@ resource "aws_instance" "instance1" {
   key_name = aws_key_pair.key_pair.key_name
   associate_public_ip_address = true
 
+  root_block_device {
+    volume_size = 20
+    volume_type = "gp3"
+  }
+
   tags = {
     Name = "${var.project_name}-pipline-instance"
   }
 }
 
-resource "aws_instance" "instance2" {
+resource "aws_instance" "observability_instance" {
   ami = "ami-0a1a0c4fe286aaf02"
   instance_type = var.observability_instance_type
   availability_zone = "${var.aws_region}a"
@@ -30,6 +35,11 @@ resource "aws_instance" "instance2" {
   subnet_id = aws_subnet.public_subnet1.id
   key_name = aws_key_pair.key_pair.key_name
   associate_public_ip_address = true
+
+  root_block_device {
+    volume_size = 15
+    volume_type = "gp3"
+  }
 
   tags = {
     Name = "${var.project_name}-observability-instance"
